@@ -9,12 +9,15 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@supabase/supabase-js": "^1.35.4",
+    "itty-router": "^2.6.1",
     "next": "12.2.3",
     "react": "18.2.0",
     "react-dom": "18.2.0"
   },
   "devDependencies": {
     "eslint": "8.21.0",
-    "eslint-config-next": "12.2.3"
+    "eslint-config-next": "12.2.3",
+    "wrangler": "^2.0.24"
   }
 }
