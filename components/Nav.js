@@ -1,18 +1,28 @@
 import Link from 'next/link';
+import { AiOutlineUser, AiOutlineShoppingCart } from 'react-icons/ai';
 
 import { useUser } from '../context/user';
+import { supabase } from '../utils/supabase';
 
 export default function Nav() {
-  const { signOut } = useUser();
+  const { user } = useUser();
 
   return (
-    <nav>
-      <button type='button' onClick={signOut}>
-        Sign Out
-      </button>
-      <Link href={'/sign-in'}>
-        <a>Sign In</a>
+    <nav className='flex'>
+      <Link href={'/'}>
+        <a>Home</a>
       </Link>
+      <Link href={'/account'}>
+        <a>
+          <AiOutlineUser size={30} />
+        </a>
+      </Link>
+      <AiOutlineShoppingCart size={30} />
+      {user && (
+        <button type='button' onClick={async () => await supabase.auth.signOut()}>
+          Sign Out
+        </button>
+      )}
     </nav>
   );
 }

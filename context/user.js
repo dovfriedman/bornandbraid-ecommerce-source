@@ -6,84 +6,51 @@ import { useRouter } from 'next/router';
 const Context = createContext();
 
 const Provider = ({ children }) => {
-  const [user, setUser] = useState(supabase.auth.user());
-  const [isLoading, setIsLoading] = useState(true);
   const router = useRouter();
 
-  // useEffect(() => {
-  //   const getUserProfile = async () => {
-  //     const sessionUser = supabase.auth.user();
+  const [user, setUser] = useState(null);
+  const [accessToken, setAccessToken] = useState(null);
+  const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
-  //     if (sessionUser) {
-  //       const { data: profile } = await supabase
-  //         .from('profile')
-  //         .select('*')
-  //         .eq('id', sessionUser.id)
-  //         .single();
-
-  //       setUser({
-  //         ...sessionUser,
-  //         ...profile,
-  //       });
-
-  //       setIsLoading(false);
-  //     }
-  //   };
-
-  //   getUserProfile();
-
-  //   supabase.auth.onAuthStateChange(() => {
-  //     getUserProfile();
-  //   });
-  // }, []);
-
-  // useEffect(() => {
-  //   axios.post('/api/set-supabase-cookie', {
-  //     event: user ? 'SIGNED_IN' : 'SIGNED_OUT',
-  //     session: supabase.auth.session(),
-  //   });
-  // }, [user]);
+  console.log({ user });
 
   useEffect(() => {
-    if (user) {
-      const subscription = supabase
-        .from(`profile:id=eq.${user.id}`)
-        .on('UPDATE', payload => {
-          setUser({ ...user, ...payload.new });
-        })
-        .subscribe();
+    const getUser = async () => {
+      const sessionUser = await supabase.auth.user();
 
-      return () => {
-        supabase.removeSubscription(subscription);
-      };
-    }
-  }, [user]);
+      if (sessionUser) {
+        setUser(sessionUser);
+      }
 
-  const signUp = async (email, password) => {
-    return await supabase.auth.signUp({
-      email,
-      password,
+      setIsLoading(false);
+    };
+
+    getUser();
+
+    supabase.auth.onAuthStateChange((event, session) => {
+      console.log(event, session);
+
+      switch (event) {
+        case 'SIGNED_OUT':
+          setUser(null);
+          setAccessToken(null);
+          break;
+        case 'SIGNED_IN':
+          setUser(session.user);
+          setAccessToken(session.access_token);
+          router.push('/account');
+          break;
+        default:
+          break;
+      }
     });
-  };
-
-  const signIn = async (email, password) => {
-    await supabase.auth.signIn({
-      email,
-      password,
-    });
-  };
-
-  const signOut = async () => {
-    await supabase.auth.signOut();
-    setUser(null);
-    router.push('/');
-  };
+  }, []);
 
   const value = {
+    accessToken,
+    error,
     isLoading,
-    signIn,
-    signOut,
-    signUp,
     user,
   };
 
