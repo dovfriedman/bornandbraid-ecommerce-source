@@ -3,7 +3,7 @@ import Link from 'next/link';
 
 import { supabase } from '../utils/supabase';
 
-import PageHeader from './PageHeader';
+import PageHeading from './PageHeading';
 
 function Component() {
   const [error, setError] = useState();
@@ -25,23 +25,30 @@ function Component() {
   };
 
   return (
-    <>
-      <PageHeader>Sign In</PageHeader>
-      <form onSubmit={handleSubmit}>
-        <input type='email' placeholder='Your email' value={email} onChange={e => setEmail(e.target.value)} />
+    <div className='flex flex-col items-center'>
+      <PageHeading>Login</PageHeading>
+      <form className='flex flex-col justify-center items-center w-[400px] gap-5' onSubmit={handleSubmit}>
         <input
+          className='w-full border border-black py-3 px-4'
+          type='email'
+          placeholder='Email'
+          value={email}
+          onChange={e => setEmail(e.target.value)}
+        />
+        <input
+          className='w-full border border-black py-3 px-4'
           type='password'
-          placeholder='Your password'
+          placeholder='Password'
           value={password}
           onChange={e => setPassword(e.target.value)}
         />
-        <button>Sign In</button>
+        <button className='w-1/4 border border-black p-2 bg-black text-white'>Sign In</button>
       </form>
-      <div>{error}</div>
+      {error && <div>{error}</div>}
       <Link href={'/register'}>
-        <a>Create an account</a>
+        <a className='mt-2.5 text-sm'>Create an account</a>
       </Link>
-    </>
+    </div>
   );
 }
 

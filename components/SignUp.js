@@ -3,7 +3,7 @@ import Link from 'next/link';
 
 import { supabase } from '../utils/supabase';
 
-import PageHeader from './PageHeader';
+import PageHeading from './PageHeading';
 
 function Component() {
   const [error, setError] = useState();
@@ -30,7 +30,7 @@ function Component() {
 
   return (
     <>
-      <PageHeader>Sign Up</PageHeader>
+      <PageHeading>Sign Up</PageHeading>
       <form onSubmit={handleSubmit}>
         <input type='text' placeholder='Your name' value={name} onChange={e => setName(e.target.value)} />
         <input type='email' placeholder='Your email' value={email} onChange={e => setEmail(e.target.value)} />

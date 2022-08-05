@@ -1,6 +1,6 @@
 import { useUser } from '../context/user';
 
-import PageHeader from '../components/PageHeader';
+import PageHeading from '../components/PageHeading';
 import SignIn from '../components/SignIn';
 
 function Page() {
@@ -13,7 +13,7 @@ function Page() {
 
   return (
     <>
-      <PageHeader>Account</PageHeader>
+      <PageHeading>Account</PageHeading>
     </>
   );
 }
