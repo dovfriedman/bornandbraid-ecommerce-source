@@ -1,6 +1,7 @@
 import '../styles/globals.css';
 import UserProvider from '../context/user';
 
+import Footer from '../components/Footer';
 import Nav from '../components/Nav';
 
 function MyApp({ Component, pageProps }) {
@@ -8,6 +9,7 @@ function MyApp({ Component, pageProps }) {
     <UserProvider>
       <Nav />
       <Component {...pageProps} />
+      <Footer />
     </UserProvider>
   );
 }

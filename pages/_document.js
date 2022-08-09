@@ -13,6 +13,7 @@ export default function Document() {
         <link rel='preconnect' href='https://fonts.googleapis.com' />
         <link rel='preconnect' href='https://fonts.gstatic.com' crossOrigin='true' />
         <link href='https://fonts.googleapis.com/css2?family=Bungee&display=swap' rel='stylesheet' />
+        <link href='https://fonts.googleapis.com/css2?family=Bitter:wght@700&display=swap' rel='stylesheet' />
         <script async src={`https://www.googletagmanager.com/gtag/js?id=G-X607DT8NCF`} />
         <script
           dangerouslySetInnerHTML={{
